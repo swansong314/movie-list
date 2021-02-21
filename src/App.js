@@ -1,23 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [movies, setMovies] = useState([]);
+  const [year, setYear] = useState(0);
+  const getMovies = async (inputYear) => {
+    const url =
+      `https://jsonmock.hackerrank.com/api/movies/search/?Year=` +
+      `${inputYear}`;
+    const response = await fetch(url);
+    const list = await response.json();
+    console.log(list);
+    setMovies(list.data);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <form>
+        <input
+          type='number'
+          id='year'
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+        />
+      </form>
+      <button onClick={() => getMovies(year)}>Search</button>
+      <ul>
+        {movies.map((movie) => {
+          return <li>{movie.Title}</li>;
+        })}
+      </ul>
     </div>
   );
 }
