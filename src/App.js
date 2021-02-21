@@ -27,7 +27,14 @@ function App() {
       <button onClick={() => getMovies(year)}>Search</button>
       <ul>
         {movies.map((movie) => {
-          return <li>{movie.Title}</li>;
+          return (
+            <li>
+              <div>
+                <h3>{movie.Title}</h3>
+                <p>Year: {movie.Year}</p>
+              </div>
+            </li>
+          );
         })}
       </ul>
     </div>
